@@ -1,6 +1,6 @@
 Summary:	Enhanced system logging and kernel message trapping daemons
 Name:		rsyslog
-Version:	1.19.10
+Version:	1.19.12
 Release:	%mkrel 1
 License:	GPL
 Group:		System/Kernel and hardware
@@ -131,4 +131,3 @@ rm -rf %{buildroot}
 %files docs
 %defattr(-,root,root)
 %doc html_docs/*
-
