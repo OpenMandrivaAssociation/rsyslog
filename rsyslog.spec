@@ -1,6 +1,6 @@
 Summary:	Enhanced system logging and kernel message trapping daemons
 Name:		rsyslog
-Version:	1.19.12
+Version:	1.20.0
 Release:	%mkrel 1
 License:	GPL
 Group:		System/Kernel and hardware
@@ -11,6 +11,7 @@ Source2:	rsyslog.sysconfig
 BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	mysql-devel >= 4.0
+BuildRequires:	postgresql-devel
 BuildRequires:	zlib-devel
 Requires:	logrotate
 Provides:       syslog-daemon
@@ -23,11 +24,11 @@ BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-root
 
 %description
 Rsyslog is an enhanced multi-threaded syslogd supporting, among others, MySQL,
-syslog/tcp, RFC 3195, permitted sender lists, filtering on any message part,
-and fine grain output format control. It is quite compatible to stock sysklogd
-and can be used as a drop-in replacement. Its advanced features make it 
-suitable for enterprise-class, encryption protected syslog relay chains while 
-at the same time being very easy to setup for the novice user.
+PostgreSQL, syslog/tcp, RFC 3195, permitted sender lists, filtering on any
+message part, and fine grain output format control. It is quite compatible to
+stock sysklogd and can be used as a drop-in replacement. Its advanced features
+make it suitable for enterprise-class, encryption protected syslog relay chains
+while  at the same time being very easy to setup for the novice user.
 
 %package	mysql
 Summary:	MySQL support for rsyslog
@@ -37,6 +38,15 @@ Requires:	%{name} = %{version}-%{release}
 %description	mysql
 The rsyslog-mysql package contains a dynamic shared object that will add
 MySQL database support to rsyslog.
+
+%package	pgsql
+Summary:	PostgreSQL support for rsyslog
+Group:		System/Kernel and hardware
+Requires:	%{name} = %{version}-%{release}
+
+%description	pgsql
+The rsyslog-pgsql package contains a dynamic shared object that will add
+PostgreSQL database support to rsyslog.
 
 %package	docs
 Summary:	HTML documentation for rsyslog
@@ -55,6 +65,7 @@ This package contains the HTML documentation for rsyslog.
 %configure2_5x \
     --sbindir=/sbin \
     --enable-mysql \
+    --enable-pgsql \
     --disable-static
 
 %make
@@ -127,6 +138,11 @@ rm -rf %{buildroot}
 %defattr(-,root,root)
 %doc plugins/ommysql/createDB.sql plugins/ommysql/contrib/delete_mysql
 %{_libdir}/rsyslog/ommysql.so
+
+%files pgsql
+%defattr(-,root,root)
+%doc plugins/ompgsql/createDB.sql
+%{_libdir}/rsyslog/ompgsql.so
 
 %files docs
 %defattr(-,root,root)
