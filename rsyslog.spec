@@ -20,7 +20,6 @@ Requires(preun):rpm-helper
 #Provides:	sysklogd = 1.4.3-1
 #Obsoletes:	sysklogd < 1.4.3-1
 Conflicts:	logrotate < 3.5.2
-BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-root
 
 %description
 Rsyslog is an enhanced multi-threaded syslogd supporting, among others, MySQL,
