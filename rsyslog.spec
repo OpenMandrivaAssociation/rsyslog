@@ -1,6 +1,6 @@
 Summary:	Enhanced system logging and kernel message trapping daemons
 Name:		rsyslog
-Version:	1.20.1
+Version:	1.21.0
 Release:	%mkrel 1
 License:	GPL
 Group:		System/Kernel and hardware
@@ -10,6 +10,7 @@ Source1:	rsyslog.init
 Source2:	rsyslog.sysconfig
 BuildRequires:	autoconf
 BuildRequires:	automake
+BuildRequires:	krb5-devel
 BuildRequires:	mysql-devel >= 4.0
 BuildRequires:	postgresql-devel
 BuildRequires:	zlib-devel
@@ -20,6 +21,7 @@ Requires(preun):rpm-helper
 #Provides:	sysklogd = 1.4.3-1
 #Obsoletes:	sysklogd < 1.4.3-1
 Conflicts:	logrotate < 3.5.2
+Buildroot:	%{_tmppath}/%{name}-%{version}-%{release}-root
 
 %description
 Rsyslog is an enhanced multi-threaded syslogd supporting, among others, MySQL,
@@ -62,10 +64,17 @@ This package contains the HTML documentation for rsyslog.
 %serverbuild
 
 %configure2_5x \
+    --disable-static \
     --sbindir=/sbin \
+    --enable-largefile \
+    --enable-regexp \
+    --enable-zlib \
+    --enable-gssapi-krb5 \
+    --enable-pthreads \
+    --enable-klogd \
+    --enable-inet \
     --enable-mysql \
-    --enable-pgsql \
-    --disable-static
+    --enable-pgsql
 
 %make
 
