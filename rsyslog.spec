@@ -1,6 +1,6 @@
 Summary:	Enhanced system logging and kernel message trapping daemons
 Name:		rsyslog
-Version:	1.21.1
+Version:	1.21.2
 Release:	%mkrel 1
 License:	GPL
 Group:		System/Kernel and hardware
@@ -48,6 +48,15 @@ Requires:	%{name} = %{version}-%{release}
 %description	pgsql
 The rsyslog-pgsql package contains a dynamic shared object that will add
 PostgreSQL database support to rsyslog.
+
+%package	gssapi
+Summary:	GSS-API support for rsyslog
+Group:		System/Kernel and hardware
+Requires:	%{name} = %{version}-%{release}
+
+%description	gssapi
+The rsyslog-gssapi package contains a dynamic shared object that will add
+GSS-API support to rsyslog.
 
 %package	docs
 Summary:	HTML documentation for rsyslog
@@ -151,6 +160,10 @@ rm -rf %{buildroot}
 %defattr(-,root,root)
 %doc plugins/ompgsql/createDB.sql
 %{_libdir}/rsyslog/ompgsql.so
+
+%files gssapi
+%defattr(-,root,root)
+%{_libdir}/rsyslog/omgssapi.so
 
 %files docs
 %defattr(-,root,root)
