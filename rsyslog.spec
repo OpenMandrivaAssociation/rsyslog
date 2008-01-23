@@ -1,11 +1,11 @@
 Summary:	Enhanced system logging and kernel message trapping daemons
 Name:		rsyslog
-Version:	2.0.0
+Version:	3.10.2
 Release:	%mkrel 1
 License:	GPL
 Group:		System/Kernel and hardware
 URL:		http://www.rsyslog.com/
-Source0:	http://download.adiscon.com/rsyslog/%{name}-%{version}.tar.gz
+Source0:	http://download.rsyslog.com/%{name}/%{name}-%{version}.tar.gz
 Source1:	rsyslog.init
 Source2:	rsyslog.sysconfig
 BuildRequires:	autoconf
