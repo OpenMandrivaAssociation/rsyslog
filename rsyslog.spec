@@ -118,14 +118,16 @@ for n in /var/log/{messages,secure,maillog,spooler}; do
     umask 066 && touch $n
 done
 
-#use sysklogd configuration files
-if [ -f /etc/syslog.conf ]; then
-    mv -f /etc/rsyslog.conf /etc/rsyslog.conf.rpmnew
-    mv -f /etc/syslog.conf  /etc/rsyslog.conf
-fi
-if [ -f /etc/sysconfig/syslog ]; then
-    mv -f /etc/sysconfig/rsyslog /etc/sysconfig/rsyslog.rpmnew
-    mv -f /etc/sysconfig/syslog  /etc/sysconfig/rsyslog
+if [ "$1" = 0 ]; then
+    #use sysklogd configuration files
+    if [ -f /etc/syslog.conf ]; then
+        mv -f /etc/rsyslog.conf /etc/rsyslog.conf.rpmnew
+        mv -f /etc/syslog.conf  /etc/rsyslog.conf
+    fi
+    if [ -f /etc/sysconfig/syslog ]; then
+        mv -f /etc/sysconfig/rsyslog /etc/sysconfig/rsyslog.rpmnew
+        mv -f /etc/sysconfig/syslog  /etc/sysconfig/rsyslog
+    fi
 fi
 
 %preun
