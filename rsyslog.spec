@@ -121,6 +121,7 @@ for n in /var/log/{messages,secure,maillog,spooler}; do
 done
 
 if [ "$1" = 0 ]; then
+    # use sysklogd configuration file
     if [ -f /etc/sysconfig/syslog ]; then
         mv -f /etc/sysconfig/rsyslog /etc/sysconfig/rsyslog.rpmnew
         cp /etc/sysconfig/syslog /etc/sysconfig/rsyslog
