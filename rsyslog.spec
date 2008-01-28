@@ -126,6 +126,13 @@ if [ "$1" = 0 ]; then
     fi
 fi
 
+%triggerpostun -- rsyslog < 2.0.1-2mdv2008.1
+if [ ! -f /etc/syslog.conf ]; then
+    # restore syslog.conf
+    mv -f /etc/rsyslog.conf /etc/syslog.conf
+    mv -f /etc/rsyslog.conf.rpmnew /etc/rsyslog.conf
+fi
+
 %preun
 %_preun_service rsyslog
 
