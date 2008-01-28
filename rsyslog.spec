@@ -126,7 +126,7 @@ if [ "$1" = 0 ]; then
     fi
     if [ -f /etc/sysconfig/syslog ]; then
         mv -f /etc/sysconfig/rsyslog /etc/sysconfig/rsyslog.rpmnew
-        mv -f /etc/sysconfig/syslog  /etc/sysconfig/rsyslog
+        cp /etc/sysconfig/syslog /etc/sysconfig/rsyslog
     fi
 fi
 
