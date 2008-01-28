@@ -8,6 +8,7 @@ URL:		http://www.rsyslog.com/
 Source0:	http://download.rsyslog.com/%{name}/%{name}-%{version}.tar.gz
 Source1:	rsyslog.init
 Source2:	rsyslog.sysconfig
+Source3:	rsyslog.conf
 BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	krb5-devel
@@ -97,7 +98,7 @@ install -d -m 755 %{buildroot}%{_sysconfdir}/sysconfig
 install -d -m 755 %{buildroot}%{_sysconfdir}/logrotate.d
 
 install -p -m 755 %{SOURCE1} %{buildroot}%{_initrddir}/rsyslog
-install -p -m 644 redhat/rsyslog.conf %{buildroot}%{_sysconfdir}/rsyslog.conf
+install -p -m 644 %{SOURCE3} %{buildroot}%{_sysconfdir}/rsyslog.conf
 install -p -m 644 redhat/rsyslog.log %{buildroot}%{_sysconfdir}/logrotate.d/rsyslog
 install -p -m 644 %{SOURCE2} %{buildroot}/%{_sysconfdir}/sysconfig/rsyslog
 
@@ -119,11 +120,6 @@ for n in /var/log/{messages,secure,maillog,spooler}; do
 done
 
 if [ "$1" = 0 ]; then
-    #use sysklogd configuration files
-    if [ -f /etc/syslog.conf ]; then
-        mv -f /etc/rsyslog.conf /etc/rsyslog.conf.rpmnew
-        mv -f /etc/syslog.conf  /etc/rsyslog.conf
-    fi
     if [ -f /etc/sysconfig/syslog ]; then
         mv -f /etc/sysconfig/rsyslog /etc/sysconfig/rsyslog.rpmnew
         cp /etc/sysconfig/syslog /etc/sysconfig/rsyslog
