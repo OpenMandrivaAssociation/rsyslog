@@ -96,6 +96,7 @@ rm -rf %{buildroot}
 install -d -m 755 %{buildroot}%{_initrddir}
 install -d -m 755 %{buildroot}%{_sysconfdir}/sysconfig
 install -d -m 755 %{buildroot}%{_sysconfdir}/logrotate.d
+install -d -m 755 %{buildroot}%{_sysconfdir}/rsyslog.d
 
 install -p -m 755 %{SOURCE1} %{buildroot}%{_initrddir}/rsyslog
 install -p -m 644 %{SOURCE3} %{buildroot}%{_sysconfdir}/rsyslog.conf
@@ -150,6 +151,7 @@ rm -rf %{buildroot}
 %config(noreplace) %{_sysconfdir}/rsyslog.conf
 %config(noreplace) %{_sysconfdir}/sysconfig/rsyslog
 %config(noreplace) %{_sysconfdir}/logrotate.d/rsyslog
+%dir %{_sysconfdir}/rsyslog.d
 %{_initrddir}/rsyslog
 /sbin/rsyslogd
 /sbin/rklogd
