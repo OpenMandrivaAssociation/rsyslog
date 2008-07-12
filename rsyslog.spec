@@ -2,9 +2,9 @@
 
 Summary:	Enhanced system logging and kernel message trapping daemons
 Name:		rsyslog
-Version:	3.16.1
+Version:	3.18.0
 Release:	%mkrel 0.1
-License:	GPL
+License:	GPLv3
 Group:		System/Kernel and hardware
 URL:		http://www.rsyslog.com/
 Source0:	http://download.rsyslog.com/%{name}/%{name}-%{version}.tar.gz
@@ -292,8 +292,8 @@ fi
 rm -rf %{buildroot}
 
 %files
-%defattr(-,root,root,-)
-%doc AUTHORS COPYING INSTALL NEWS README  doc/rsyslog-example.conf
+%defattr(-,root,root)
+%doc AUTHORS NEWS README  doc/rsyslog-example.conf
 %{_initrddir}/rsyslog
 %config(noreplace) %{_sysconfdir}/rsyslog.conf
 %config(noreplace) %{_sysconfdir}/sysconfig/rsyslog
