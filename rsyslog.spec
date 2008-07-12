@@ -18,7 +18,7 @@ Source7:	03_gssapi.conf
 Source8:	04_relp.conf
 Source9:	05_dbi.conf
 Source10:	06_snmp.conf
-Patch0:		rsyslog-3.11.4-undef.patch
+Patch0:		rsyslog-3.18.0-undef.patch
 BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	krb5-devel
