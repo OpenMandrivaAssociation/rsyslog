@@ -3,7 +3,7 @@
 Summary:	Enhanced system logging and kernel message trapping daemons
 Name:		rsyslog
 Version:	3.18.0
-Release:	%mkrel 0.1
+Release:	%mkrel 1
 License:	GPLv3
 Group:		System/Kernel and hardware
 URL:		http://www.rsyslog.com/
@@ -18,6 +18,7 @@ Source7:	03_gssapi.conf
 Source8:	04_relp.conf
 Source9:	05_dbi.conf
 Source10:	06_snmp.conf
+Source11:	sysklogd.conf
 Patch0:		rsyslog-3.18.0-undef.patch
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -154,6 +155,7 @@ cp %{SOURCE7} Mandriva/03_gssapi.conf
 cp %{SOURCE8} Mandriva/04_relp.conf
 cp %{SOURCE9} Mandriva/05_dbi.conf
 cp %{SOURCE10} Mandriva/06_snmp.conf
+cp %{SOURCE11} Mandriva/syslog.conf
 
 %build
 %serverbuild
@@ -173,6 +175,7 @@ cp %{SOURCE10} Mandriva/06_snmp.conf
     --enable-libdbi \
     --enable-snmp \
     --enable-rsyslogd \
+    --enable-mail \
     --enable-relp \
     --enable-imfile \
     --enable-imtemplate
@@ -191,6 +194,7 @@ install -d -m 755 %{buildroot}%{_sysconfdir}/rsyslog.d
 
 install -p -m 755 Mandriva/rsyslog.init %{buildroot}%{_initrddir}/rsyslog
 install -p -m 644 Mandriva/rsyslog.conf %{buildroot}%{_sysconfdir}/rsyslog.conf
+install -p -m 644 Mandriva/syslog.conf %{buildroot}%{_sysconfdir}/syslog.conf
 install -p -m 644 redhat/rsyslog.log %{buildroot}%{_sysconfdir}/logrotate.d/rsyslog
 install -p -m 644 Mandriva/rsyslog.sysconfig %{buildroot}/%{_sysconfdir}/sysconfig/rsyslog
 install -p -m 644 Mandriva/*_*.conf %{buildroot}%{_sysconfdir}/rsyslog.d/
@@ -296,6 +300,7 @@ rm -rf %{buildroot}
 %doc AUTHORS NEWS README  doc/rsyslog-example.conf
 %{_initrddir}/rsyslog
 %config(noreplace) %{_sysconfdir}/rsyslog.conf
+%config(noreplace) %{_sysconfdir}/syslog.conf
 %config(noreplace) %{_sysconfdir}/sysconfig/rsyslog
 %config(noreplace) %{_sysconfdir}/logrotate.d/rsyslog
 %dir %{_sysconfdir}/rsyslog.d
@@ -313,6 +318,7 @@ rm -rf %{buildroot}
 %{_libdir}/rsyslog/lmtcpclt.so
 %{_libdir}/rsyslog/lmtcpsrv.so
 %{_libdir}/rsyslog/omtesting.so
+%{_libdir}/rsyslog/ommail.so
 %{_mandir}/*/*
 
 %files mysql
