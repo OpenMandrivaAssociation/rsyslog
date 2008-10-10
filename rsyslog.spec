@@ -2,7 +2,7 @@
 
 Summary:	Enhanced system logging and kernel message trapping daemons
 Name:		rsyslog
-Version:	3.18.4
+Version:	3.18.5
 Release:	%mkrel 1
 License:	GPLv3
 Group:		System/Kernel and hardware
