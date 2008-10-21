@@ -316,6 +316,8 @@ rm -rf %{buildroot}
 %{_libdir}/rsyslog/imudp.so
 %{_libdir}/rsyslog/imuxsock.so
 %{_libdir}/rsyslog/lmnet.so
+%{_libdir}/rsyslog/lmnetstrms.so
+%{_libdir}/rsyslog/lmnsd_ptcp.so   
 %{_libdir}/rsyslog/lmregexp.so
 %{_libdir}/rsyslog/lmtcpclt.so
 %{_libdir}/rsyslog/lmtcpsrv.so
