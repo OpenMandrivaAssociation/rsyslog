@@ -19,6 +19,7 @@ Source8:	04_relp.conf
 Source9:	05_dbi.conf
 Source10:	06_snmp.conf
 Source11:	sysklogd.conf
+Source12:	07_rsyslog.log
 Patch0:		rsyslog-3.18.0-undef.patch
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -156,6 +157,7 @@ cp %{SOURCE8} Mandriva/04_relp.conf
 cp %{SOURCE9} Mandriva/05_dbi.conf
 cp %{SOURCE10} Mandriva/06_snmp.conf
 cp %{SOURCE11} Mandriva/syslog.conf
+cp %{SOURCE12} Mandriva/rsyslog.log
 
 %build
 %serverbuild
@@ -195,7 +197,7 @@ install -d -m 755 %{buildroot}%{_sysconfdir}/rsyslog.d
 install -p -m 755 Mandriva/rsyslog.init %{buildroot}%{_initrddir}/rsyslog
 install -p -m 644 Mandriva/rsyslog.conf %{buildroot}%{_sysconfdir}/rsyslog.conf
 install -p -m 644 Mandriva/syslog.conf %{buildroot}%{_sysconfdir}/syslog.conf
-install -p -m 644 redhat/rsyslog.log %{buildroot}%{_sysconfdir}/logrotate.d/rsyslog
+install -p -m 644 Mandriva/rsyslog.log %{buildroot}%{_sysconfdir}/logrotate.d/rsyslog
 install -p -m 644 Mandriva/rsyslog.sysconfig %{buildroot}/%{_sysconfdir}/sysconfig/rsyslog
 install -p -m 644 Mandriva/*_*.conf %{buildroot}%{_sysconfdir}/rsyslog.d/
 
