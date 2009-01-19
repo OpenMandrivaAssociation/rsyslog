@@ -2,7 +2,7 @@
 
 Summary:	Enhanced system logging and kernel message trapping daemons
 Name:		rsyslog
-Version:	3.20.2
+Version:	3.20.3
 Release:	%mkrel 1
 License:	GPLv3
 Group:		System/Kernel and hardware
@@ -20,7 +20,7 @@ Source9:	05_dbi.conf
 Source10:	06_snmp.conf
 Source11:	sysklogd.conf
 Source12:	07_rsyslog.log
-Patch0:		rsyslog-3.18.0-undef.patch
+Patch0:		rsyslog-3.20.3-undef.patch
 BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	krb5-devel
@@ -143,7 +143,7 @@ This package contains the HTML documentation for rsyslog.
 %prep
 
 %setup -q
-%patch0 -p1
+%patch0 -p0 -b .undef
 
 mkdir -p Mandriva
 cp %{SOURCE1} Mandriva/rsyslog.init
@@ -244,7 +244,7 @@ fi
 %postun
 if [ "$1" -ge "1" ]; then
     %{_initrddir}/rsyslog condrestart > /dev/null 2>/dev/null || :
-fi	
+fi
 
 %post mysql
 %{_initrddir}/rsyslog condrestart > /dev/null 2>/dev/null || :
@@ -317,7 +317,7 @@ rm -rf %{buildroot}
 %{_libdir}/rsyslog/imuxsock.so
 %{_libdir}/rsyslog/lmnet.so
 %{_libdir}/rsyslog/lmnetstrms.so
-%{_libdir}/rsyslog/lmnsd_ptcp.so   
+%{_libdir}/rsyslog/lmnsd_ptcp.so
 %{_libdir}/rsyslog/lmregexp.so
 %{_libdir}/rsyslog/lmtcpclt.so
 %{_libdir}/rsyslog/lmtcpsrv.so
