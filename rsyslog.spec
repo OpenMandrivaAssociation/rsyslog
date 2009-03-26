@@ -3,7 +3,7 @@
 Summary:	Enhanced system logging and kernel message trapping daemons
 Name:		rsyslog
 Version:	3.21.10
-Release:	%mkrel 2
+Release:	%mkrel 3
 License:	GPLv3
 Group:		System/Kernel and hardware
 URL:		http://www.rsyslog.com/
@@ -21,6 +21,7 @@ Source10:	06_snmp.conf
 Source11:	sysklogd.conf
 Source12:	07_rsyslog.log
 Patch0:		rsyslog-3.20.3-undef.patch
+Patch1:		rsyslog-3.21.10-convVar.patch
 BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	krb5-devel
@@ -39,6 +40,8 @@ Requires(preun):rpm-helper
 #Provides:	sysklogd = 1.4.3-1
 #Obsoletes:	sysklogd < 1.4.3-1
 Conflicts:	logrotate < 3.5.2
+Conflicts:	sysklogd
+Conflicts:	syslog-ng
 Buildroot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 
 %description
@@ -144,6 +147,8 @@ This package contains the HTML documentation for rsyslog.
 
 %setup -q
 %patch0 -p0 -b .undef
+# Fedora patch, fixes https://bugzilla.redhat.com/show_bug.cgi?id=485937
+%patch1 -p1 -b .convVar
 
 mkdir -p Mandriva
 cp %{SOURCE1} Mandriva/rsyslog.init
