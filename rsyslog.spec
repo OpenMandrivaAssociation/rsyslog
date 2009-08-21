@@ -23,6 +23,7 @@ Source12:	07_rsyslog.log
 Patch0:		rsyslog-3.20.3-undef.patch
 BuildRequires:	autoconf
 BuildRequires:	automake
+BuildRequires:	java-rpmbuild
 BuildRequires:	krb5-devel
 BuildRequires:	libdbi-devel
 BuildRequires:	libtool
