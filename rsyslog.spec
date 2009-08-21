@@ -2,7 +2,7 @@
 
 Summary:	Enhanced system logging and kernel message trapping daemons
 Name:		rsyslog
-Version:	4.2.0
+Version:	4.4.0
 Release:	%mkrel 1
 License:	GPLv3
 Group:		System/Kernel and hardware
@@ -321,6 +321,7 @@ rm -rf %{buildroot}
 %{_libdir}/rsyslog/lmnetstrms.so
 %{_libdir}/rsyslog/lmnsd_ptcp.so
 %{_libdir}/rsyslog/lmregexp.so
+%{_libdir}/rsyslog/lmstrmsrv.so
 %{_libdir}/rsyslog/lmtcpclt.so
 %{_libdir}/rsyslog/lmtcpsrv.so
 %{_libdir}/rsyslog/omtesting.so
