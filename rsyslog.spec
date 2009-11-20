@@ -3,7 +3,7 @@
 Summary:	Enhanced system logging and kernel message trapping daemons
 Name:		rsyslog
 Version:	4.4.2
-Release:	%mkrel 2
+Release:	%mkrel 3
 License:	GPLv3
 Group:		System/Kernel and hardware
 URL:		http://www.rsyslog.com/
@@ -37,10 +37,11 @@ Requires:	logrotate
 Provides:       syslog-daemon
 Requires(post):	rpm-helper
 Requires(preun):rpm-helper
-#Provides:	sysklogd = 1.4.3-1
-#Obsoletes:	sysklogd < 1.4.3-1
+# Nothing requires sysklogd
+#Provides:	sysklogd = 1.4.5-5
+Obsoletes:	sysklogd < 1.5-5
 Conflicts:	logrotate < 3.5.2
-Conflicts:	sysklogd
+#Conflicts:	sysklogd
 Conflicts:	syslog-ng
 Buildroot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 
@@ -223,14 +224,6 @@ for n in /var/log/{messages,secure,maillog,spooler}; do
     umask 066 && touch $n
 done
 
-if [ "$1" = 0 ]; then
-    # use sysklogd configuration file
-    if [ -f /etc/sysconfig/syslog ]; then
-        mv -f /etc/sysconfig/rsyslog /etc/sysconfig/rsyslog.rpmnew
-        cp /etc/sysconfig/syslog /etc/sysconfig/rsyslog
-    fi
-fi
-
 %triggerpostun -- rsyslog < 2.0.1-2mdv2008.1
 if [ ! -f /etc/syslog.conf ]; then
     # restore syslog.conf
@@ -240,6 +233,13 @@ fi
 
 %triggerun -- rsyslog < 3.0.0
 /bin/kill `cat /var/run/rklogd.pid 2> /dev/null` > /dev/null 2>&1 ||:
+
+%triggerun -- sysklogd < 1.5-5
+if [ -f /var/run/syslogd.pid ]
+then
+	%{_initrddir}/syslog stop
+	%{_initrddir}/rsyslog start
+fi
 
 %preun
 %_preun_service rsyslog
