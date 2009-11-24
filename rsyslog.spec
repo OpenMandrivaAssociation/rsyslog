@@ -3,7 +3,7 @@
 Summary:	Enhanced system logging and kernel message trapping daemons
 Name:		rsyslog
 Version:	4.4.2
-Release:	%mkrel 3
+Release:	%mkrel 4
 License:	GPLv3
 Group:		System/Kernel and hardware
 URL:		http://www.rsyslog.com/
@@ -235,6 +235,12 @@ fi
 /bin/kill `cat /var/run/rklogd.pid 2> /dev/null` > /dev/null 2>&1 ||:
 
 %triggerun -- sysklogd < 1.5-5
+. /etc/sysconfig/syslog
+if echo $SYSLOGD_OPTIONS | grep -q -- "-r"
+then
+	sed -i	-e 's/^\#\$ModLoad imudp.so$/$ModLoad imudp.so/' \
+		-e 's/^\#\$UDPServerRun 514$/$UDPServerRun 514/' /etc/rsyslog.d/00_common.conf
+fi
 if [ -f /var/run/syslogd.pid ]
 then
 	%{_initrddir}/syslog stop
