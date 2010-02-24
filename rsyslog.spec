@@ -2,8 +2,8 @@
 
 Summary:	Enhanced system logging and kernel message trapping daemons
 Name:		rsyslog
-Version:	4.4.2
-Release:	%mkrel 6
+Version:	4.6.0
+Release:	%mkrel 1
 License:	GPLv3
 Group:		System/Kernel and hardware
 URL:		http://www.rsyslog.com/
@@ -20,7 +20,6 @@ Source9:	05_dbi.conf
 Source10:	06_snmp.conf
 Source11:	sysklogd.conf
 Source12:	07_rsyslog.log
-Patch0:		rsyslog-3.20.3-undef.patch
 BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	java-rpmbuild
@@ -147,7 +146,6 @@ This package contains the HTML documentation for rsyslog.
 %prep
 
 %setup -q
-%patch0 -p0 -b .undef
 
 mkdir -p Mandriva
 cp %{SOURCE1} Mandriva/rsyslog.init
@@ -330,6 +328,7 @@ rm -rf %{buildroot}
 %{_libdir}/rsyslog/lmregexp.so
 %{_libdir}/rsyslog/lmstrmsrv.so
 %{_libdir}/rsyslog/lmtcpclt.so
+%{_libdir}/rsyslog/lmzlibw.so
 %{_libdir}/rsyslog/lmtcpsrv.so
 %{_libdir}/rsyslog/omtesting.so
 %{_libdir}/rsyslog/ommail.so
