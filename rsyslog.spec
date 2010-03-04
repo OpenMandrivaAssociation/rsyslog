@@ -2,8 +2,8 @@
 
 Summary:	Enhanced system logging and kernel message trapping daemons
 Name:		rsyslog
-Version:	4.6.0
-Release:	%mkrel 2
+Version:	4.6.1
+Release:	%mkrel 1
 License:	GPLv3
 Group:		System/Kernel and hardware
 URL:		http://www.rsyslog.com/
@@ -161,8 +161,7 @@ cp %{SOURCE11} Mandriva/syslog.conf
 cp %{SOURCE12} Mandriva/rsyslog.log
 
 %build
-# disable serverbuild, full-stack-protection causes crash (http://bugzilla.adiscon.com/show_bug.cgi?id=182 )
-#serverbuild
+%serverbuild
 
 %configure2_5x \
     --disable-static \
