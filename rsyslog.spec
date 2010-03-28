@@ -2,7 +2,7 @@
 
 Summary:	Enhanced system logging and kernel message trapping daemons
 Name:		rsyslog
-Version:	4.6.1
+Version:	4.6.2
 Release:	%mkrel 1
 License:	GPLv3
 Group:		System/Kernel and hardware
