@@ -2,8 +2,8 @@
 
 Summary:	Enhanced system logging and kernel message trapping daemons
 Name:		rsyslog
-Version:	4.6.5
-Release:	%mkrel 2
+Version:	5.6.2
+Release:	%mkrel 1
 License:	GPLv3
 Group:		System/Kernel and hardware
 URL:		http://www.rsyslog.com/
@@ -305,7 +305,7 @@ rm -rf %{buildroot}
 
 %files
 %defattr(-,root,root)
-%doc AUTHORS NEWS README  doc/rsyslog-example.conf
+%doc AUTHORS ChangeLog README  doc/rsyslog-example.conf
 %{_initrddir}/rsyslog
 %config(noreplace) %{_sysconfdir}/rsyslog.conf
 %config(noreplace) %{_sysconfdir}/syslog.conf
@@ -331,6 +331,7 @@ rm -rf %{buildroot}
 %{_libdir}/rsyslog/lmtcpsrv.so
 %{_libdir}/rsyslog/omtesting.so
 %{_libdir}/rsyslog/ommail.so
+%{_libdir}/rsyslog/omruleset.so
 %{_mandir}/*/*
 
 %files mysql
