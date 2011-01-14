@@ -1,9 +1,11 @@
+%define _with_systemd 1
+
 %define _libdir /%{_lib}
 
 Summary:	Enhanced system logging and kernel message trapping daemons
 Name:		rsyslog
 Version:	5.6.2
-Release:	%mkrel 1
+Release:	%mkrel 2
 License:	GPLv3
 Group:		System/Kernel and hardware
 URL:		http://www.rsyslog.com/
@@ -20,6 +22,8 @@ Source9:	05_dbi.conf
 Source10:	06_snmp.conf
 Source11:	sysklogd.conf
 Source12:	07_rsyslog.log
+# add systemd support
+Patch0:		rsyslog-5.6.2-systemd.patch
 BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	java-rpmbuild
@@ -32,6 +36,9 @@ BuildRequires:	pkgconfig
 BuildRequires:	postgresql-devel
 BuildRequires:	relp-devel
 BuildRequires:	zlib-devel
+%if %{_with_systemd}
+BuildRequires:	systemd-units
+%endif
 Requires:	logrotate
 Provides:       syslog-daemon
 Requires(post):	rpm-helper
@@ -145,6 +152,7 @@ This package contains the HTML documentation for rsyslog.
 
 %prep
 %setup -q
+%patch0 -p1 -b .systemd
 
 mkdir -p Mandriva
 cp %{SOURCE1} Mandriva/rsyslog.init
@@ -313,6 +321,10 @@ rm -rf %{buildroot}
 %config(noreplace) %{_sysconfdir}/logrotate.d/rsyslog
 %dir %{_sysconfdir}/rsyslog.d
 %config(noreplace) %{_sysconfdir}/rsyslog.d/*_common.conf
+%if %{_with_systemd}
+/lib/systemd/system/rsyslog.service
+/lib/systemd/system/rsyslog.socket
+%endif
 /sbin/rsyslogd
 %dir %{_libdir}/rsyslog
 %{_libdir}/rsyslog/imfile.so
