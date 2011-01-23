@@ -222,12 +222,18 @@ cp doc/*.html doc/*.jpg html_docs/
 chmod 644 html_docs/*
 
 %post
+# The following should really be part of _post_service
+[ $1 = 1 -a -x /bin/systemctl ] && /bin/systemctl enable rsyslog.service || :
 %_post_service rsyslog
 
 for n in /var/log/{messages,secure,maillog,spooler}; do
     [ -f $n ] && continue
     umask 066 && touch $n
 done
+
+%triggerin -- rsyslog < 5.6.2-3
+# enable systemd unit on update
+[ -x /bin/systemctl ] && /bin/systemctl enable rsyslog.service || :
 
 %triggerpostun -- rsyslog < 2.0.1-2mdv2008.1
 if [ ! -f /etc/syslog.conf ]; then
@@ -254,6 +260,8 @@ fi
 
 %preun
 %_preun_service rsyslog
+# The following should really be part of _preun_service
+[ $1 = 0 -a -x /bin/systemctl ] && /bin/systemctl disable rsyslog.service || :
 
 %postun
 if [ "$1" -ge "1" ]; then
