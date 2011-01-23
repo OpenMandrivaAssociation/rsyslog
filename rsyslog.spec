@@ -5,7 +5,7 @@
 Summary:	Enhanced system logging and kernel message trapping daemons
 Name:		rsyslog
 Version:	5.6.2
-Release:	%mkrel 2
+Release:	%mkrel 3
 License:	GPLv3
 Group:		System/Kernel and hardware
 URL:		http://www.rsyslog.com/
@@ -221,6 +221,9 @@ rm -rf html_docs; mkdir -p html_docs
 cp doc/*.html doc/*.jpg html_docs/
 chmod 644 html_docs/*
 
+# (bor) rsyslog.socket conflicts with syslog.socket for the /dev/log
+rm -f %{buildroot}/lib/systemd/system/rsyslog.socket
+
 %post
 # The following should really be part of _post_service
 [ $1 = 1 -a -x /bin/systemctl ] && /bin/systemctl enable rsyslog.service || :
@@ -331,7 +334,7 @@ rm -rf %{buildroot}
 %config(noreplace) %{_sysconfdir}/rsyslog.d/*_common.conf
 %if %{_with_systemd}
 /lib/systemd/system/rsyslog.service
-/lib/systemd/system/rsyslog.socket
+#/lib/systemd/system/rsyslog.socket
 %endif
 /sbin/rsyslogd
 %dir %{_libdir}/rsyslog
