@@ -4,8 +4,8 @@
 
 Summary:	Enhanced system logging and kernel message trapping daemons
 Name:		rsyslog
-Version:	5.6.2
-Release:	%mkrel 6
+Version:	5.8.0
+Release:	%mkrel 1
 License:	GPLv3
 Group:		System/Kernel and hardware
 URL:		http://www.rsyslog.com/
@@ -22,10 +22,6 @@ Source9:	05_dbi.conf
 Source10:	06_snmp.conf
 Source11:	sysklogd.conf
 Source12:	07_rsyslog.log
-# add systemd support
-Patch0:		rsyslog-5.6.2-systemd.patch
-Patch1:		0001-systemd-use-standard-syslog.socket-unit.patch
-Patch2:		rsyslog-5.6.2-acquire-dev-log-socket-from-systemd.patch
 BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	java-rpmbuild
@@ -154,9 +150,6 @@ This package contains the HTML documentation for rsyslog.
 
 %prep
 %setup -q
-%patch0 -p1 -b .systemd
-%patch1 -p1 -b .systemd_syslog_socket
-%patch2 -p1 -b .systemd_dev_log
 
 mkdir -p Mandriva
 cp %{SOURCE1} Mandriva/rsyslog.init
