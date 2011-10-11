@@ -5,7 +5,7 @@
 Summary:	Enhanced system logging and kernel message trapping daemons
 Name:		rsyslog
 Version:	5.8.5
-Release:	%mkrel 1
+Release:	%mkrel 2
 License:	GPLv3
 Group:		System/Kernel and hardware
 URL:		http://www.rsyslog.com/
@@ -22,6 +22,7 @@ Source9:	05_dbi.conf
 Source10:	06_snmp.conf
 Source11:	sysklogd.conf
 Source12:	07_rsyslog.log
+Patch0:		rsyslog-5.8.5-systemd.patch
 BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	java-rpmbuild
@@ -38,9 +39,17 @@ BuildRequires:	zlib-devel
 BuildRequires:	systemd-units
 %endif
 Requires:	logrotate
-Provides:       syslog-daemon
+Provides:	syslog-daemon
+Requires(post):	/sbin/chkconfig
+Requires(post):	coreutils
+%if %{_with_systemd}
+Requires(post):	systemd-units
+Requires(post):	systemd-sysvinit
+Requires(preun):	systemd-units
+Requires(postun):	systemd-units
+%endif
 Requires(post):	rpm-helper
-Requires(preun):rpm-helper
+Requires(preun):	rpm-helper
 # Nothing requires sysklogd
 #Provides:	sysklogd = 1.4.5-5
 Obsoletes:	sysklogd < 1.5-5
@@ -69,36 +78,36 @@ while  at the same time being very easy to setup for the novice user.
                  module.
  o imfile.so - This is the input module for reading text file data.
 
-%package	mysql
+%package mysql
 Summary:	MySQL support for rsyslog
 Group:		System/Kernel and hardware
 Requires:	%{name} = %{version}-%{release}
 
-%description	mysql
+%description mysql
 The rsyslog-mysql package contains a dynamic shared object that will add
 MySQL database support to rsyslog.
 
  o ommysql.so - This is the implementation of the build-in output module for
                 MySQL.
 
-%package	pgsql
+%package pgsql
 Summary:	PostgreSQL support for rsyslog
 Group:		System/Kernel and hardware
 Requires:	%{name} = %{version}-%{release}
 
-%description	pgsql
+%description pgsql
 The rsyslog-pgsql package contains a dynamic shared object that will add
 PostgreSQL database support to rsyslog.
 
  o ompgsql.so - This is the implementation of the build-in output module for
                 PgSQL.
 
-%package	gssapi
+%package gssapi
 Summary:	GSS-API support for rsyslog
 Group:		System/Kernel and hardware
 Requires:	%{name} = %{version}-%{release}
 
-%description	gssapi
+%description gssapi
 The rsyslog-gssapi package contains dynamic shared objects that will add
 GSS-API support to rsyslog.
 
@@ -107,45 +116,45 @@ GSS-API support to rsyslog.
  o omgssapi.so  - This is the implementation of the build-in forwarding output
                   module.
 
-%package	relp
+%package relp
 Summary:	RELP support for rsyslog
 Group:		System/Kernel and hardware
 Requires:	%{name} = %{version}-%{release}
 
-%description	relp
+%description relp
 The rsyslog-relp package contains a dynamic shared object that will add
 RELP support to rsyslog.
 
  o imrelp.so - This is the implementation of the RELP input module.
  o omrelp.so - This is the implementation of the RELP output module.
 
-%package	dbi
+%package dbi
 Summary:	Dbi support for rsyslog
 Group:		System/Kernel and hardware
 Requires:	%{name} = %{version}-%{release}
 
-%description	dbi
+%description dbi
 The rsyslog-dbi package contains a dynamic shared object that will add
 dbi driver support to rsyslog.
 
  o omlibdbi.so - This is the implementation of the dbi output module.
 
-%package	snmp
+%package snmp
 Summary:	SNMP support for rsyslog
 Group:		System/Kernel and hardware
 Requires:	%{name} = %{version}-%{release}
 
-%description	snmp
+%description snmp
 The rsyslog-snmp package contains a dynamic shared object that will add
 SNMP support to rsyslog.
 
  o omsnmp.so - This module sends an snmp trap.
 
-%package	docs
+%package docs
 Summary:	HTML documentation for rsyslog
 Group:		System/Kernel and hardware
 
-%description	docs
+%description docs
 This package contains the HTML documentation for rsyslog.
 
 %prep
@@ -165,8 +174,14 @@ cp %{SOURCE10} Mandriva/06_snmp.conf
 cp %{SOURCE11} Mandriva/syslog.conf
 cp %{SOURCE12} Mandriva/rsyslog.log
 
+%patch0 -p1 -b .systemd
+
 %build
+%if %mdkver >= 201200
+%serverbuild_hardened
+%else
 %serverbuild
+%endif
 
 %configure2_5x \
     --disable-static \
