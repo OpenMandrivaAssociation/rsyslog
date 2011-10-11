@@ -184,6 +184,7 @@ cp %{SOURCE12} Mandriva/rsyslog.log
 %endif
 
 %configure2_5x \
+    --with-systemdsystemunitdir=/lib/systemd/system \
     --disable-static \
     --sbindir=/sbin \
     --enable-largefile \
