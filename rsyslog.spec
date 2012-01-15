@@ -5,7 +5,7 @@
 Summary:	Enhanced system logging and kernel message trapping daemons
 Name:		rsyslog
 Version:	5.8.6
-Release:	%mkrel 1
+Release:	%mkrel 2
 License:	GPLv3
 Group:		System/Kernel and hardware
 URL:		http://www.rsyslog.com/
@@ -184,7 +184,9 @@ cp %{SOURCE12} Mandriva/rsyslog.log
 %endif
 
 %configure2_5x \
-    --with-systemdsystemunitdir=/lib/systemd/system \
+%if %{_with_systemd}
+    --with-systemdsystemunitdir=%{_unitdir} \
+%endif
     --disable-static \
     --sbindir=/sbin \
     --enable-largefile \
@@ -216,7 +218,9 @@ install -d -m 755 %{buildroot}%{_sysconfdir}/sysconfig
 install -d -m 755 %{buildroot}%{_sysconfdir}/logrotate.d
 install -d -m 755 %{buildroot}%{_sysconfdir}/rsyslog.d
 
+%if !%{_with_systemd}
 install -p -m 755 Mandriva/rsyslog.init %{buildroot}%{_initrddir}/rsyslog
+%endif
 install -p -m 644 Mandriva/rsyslog.conf %{buildroot}%{_sysconfdir}/rsyslog.conf
 install -p -m 644 Mandriva/syslog.conf %{buildroot}%{_sysconfdir}/syslog.conf
 install -p -m 644 Mandriva/rsyslog.log %{buildroot}%{_sysconfdir}/logrotate.d/rsyslog
@@ -338,7 +342,6 @@ rm -rf %{buildroot}
 %files
 %defattr(-,root,root)
 %doc AUTHORS ChangeLog README  doc/rsyslog-example.conf
-%{_initrddir}/rsyslog
 %config(noreplace) %{_sysconfdir}/rsyslog.conf
 %config(noreplace) %{_sysconfdir}/syslog.conf
 %config(noreplace) %{_sysconfdir}/sysconfig/rsyslog
@@ -346,8 +349,9 @@ rm -rf %{buildroot}
 %dir %{_sysconfdir}/rsyslog.d
 %config(noreplace) %{_sysconfdir}/rsyslog.d/*_common.conf
 %if %{_with_systemd}
-/lib/systemd/system/rsyslog.service
-#/lib/systemd/system/rsyslog.socket
+%{_unitdir}/rsyslog.service
+%else
+%{_initrddir}/rsyslog
 %endif
 /sbin/rsyslogd
 %dir %{_libdir}/rsyslog
