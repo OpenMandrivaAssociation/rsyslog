@@ -4,8 +4,8 @@
 
 Summary:	Enhanced system logging and kernel message trapping daemons
 Name:		rsyslog
-Version:	5.8.6
-Release:	%mkrel 2
+Version:	5.8.7
+Release:	1
 License:	GPLv3
 Group:		System/Kernel and hardware
 URL:		http://www.rsyslog.com/
@@ -56,7 +56,6 @@ Obsoletes:	sysklogd < 1.5-5
 Conflicts:	logrotate < 3.5.2
 #Conflicts:	sysklogd
 Conflicts:	syslog-ng
-Buildroot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 
 %description
 Rsyslog is an enhanced multi-threaded syslogd supporting, among others, MySQL,
@@ -209,8 +208,6 @@ cp %{SOURCE12} Mandriva/rsyslog.log
 %make
 
 %install
-rm -rf %{buildroot}
-
 %makeinstall_std
 
 install -d -m 755 %{buildroot}%{_initrddir}
@@ -336,9 +333,6 @@ if [ "$1" = 0 ]; then
     %{_initrddir}/rsyslog condrestart > /dev/null 2>/dev/null || :
 fi
 
-%clean
-rm -rf %{buildroot}
-
 %files
 %defattr(-,root,root)
 %doc AUTHORS ChangeLog README  doc/rsyslog-example.conf
@@ -375,40 +369,33 @@ rm -rf %{buildroot}
 %{_mandir}/*/*
 
 %files mysql
-%defattr(-,root,root)
 %doc plugins/ommysql/createDB.sql plugins/ommysql/contrib/delete_mysql
 %config(noreplace) %{_sysconfdir}/rsyslog.d/*_mysql.conf
 %{_libdir}/rsyslog/ommysql.so
 
 %files pgsql
-%defattr(-,root,root)
 %doc plugins/ompgsql/createDB.sql
 %config(noreplace) %{_sysconfdir}/rsyslog.d/*_pgsql.conf
 %{_libdir}/rsyslog/ompgsql.so
 
 %files gssapi
-%defattr(-,root,root)
 %config(noreplace) %{_sysconfdir}/rsyslog.d/*_gssapi.conf
 %{_libdir}/rsyslog/omgssapi.so
 %{_libdir}/rsyslog/imgssapi.so
 %{_libdir}/rsyslog/lmgssutil.so
 
 %files relp
-%defattr(-,root,root)
 %config(noreplace) %{_sysconfdir}/rsyslog.d/*_relp.conf
 %{_libdir}/rsyslog/imrelp.so
 %{_libdir}/rsyslog/omrelp.so
 
 %files dbi
-%defattr(-,root,root)
 %config(noreplace) %{_sysconfdir}/rsyslog.d/*_dbi.conf
 %{_libdir}/rsyslog/omlibdbi.so
 
 %files snmp
-%defattr(-,root,root)
 %config(noreplace) %{_sysconfdir}/rsyslog.d/*_snmp.conf
 %{_libdir}/rsyslog/omsnmp.so
 
 %files docs
-%defattr(-,root,root)
 %doc html_docs/*
