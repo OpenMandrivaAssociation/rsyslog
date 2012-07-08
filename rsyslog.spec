@@ -4,7 +4,7 @@
 
 Summary:	Enhanced system logging and kernel message trapping daemons
 Name:		rsyslog
-Version:	5.8.11
+Version:	5.8.12
 Release:	1
 License:	GPLv3
 Group:		System/Kernel and hardware
@@ -22,7 +22,7 @@ Source9:	05_dbi.conf
 Source10:	06_snmp.conf
 Source11:	sysklogd.conf
 Source12:	07_rsyslog.log
-Patch0:		rsyslog-5.8.5-systemd.patch
+Patch0:		rsyslog-5.8.12-systemd.patch
 BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	java-rpmbuild
@@ -241,12 +241,18 @@ rm -f %{buildroot}/lib/systemd/system/rsyslog.socket
 %post
 # The following should really be part of _post_service
 [ $1 = 1 -a -x /bin/systemctl ] && /bin/systemctl enable rsyslog.service || :
+
 %_post_service rsyslog
 
 for n in /var/log/{messages,secure,maillog,spooler}; do
     [ -f $n ] && continue
     umask 066 && touch $n
 done
+
+# (from Mageia) Handle a quirk of rsyslog installation
+if [ -f /etc/systemd/system/multi-user.target.wants/rsyslog.service -a ! -f /etc/systemd/system/syslog.service ]; then
+	cp -a /etc/systemd/system/multi-user.target.wants/rsyslog.service /etc/systemd/system/syslog.service
+fi
 
 %triggerin -- rsyslog < 5.6.2-3
 # enable systemd unit on update
