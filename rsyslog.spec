@@ -4,7 +4,7 @@
 
 Summary:	Enhanced system logging and kernel message trapping daemons
 Name:		rsyslog
-Version:	5.8.12
+Version:	5.10.0
 Release:	1
 License:	GPLv3
 Group:		System/Kernel and hardware
@@ -288,55 +288,55 @@ fi
 
 %postun
 if [ "$1" -ge "1" ]; then
-    %{_initrddir}/rsyslog condrestart > /dev/null 2>/dev/null || :
+     /bin/systemctl try-restart rsyslog.service || :
 fi
 
 %post mysql
-%{_initrddir}/rsyslog condrestart > /dev/null 2>/dev/null || :
+/bin/systemctl try-restart rsyslog.service || :
 
 %preun mysql
 if [ "$1" = 0 ]; then
-    %{_initrddir}/rsyslog condrestart > /dev/null 2>/dev/null || :
+    /bin/systemctl try-restart rsyslog.service || :
 fi
 
 %post pgsql
-%{_initrddir}/rsyslog condrestart > /dev/null 2>/dev/null || :
+/bin/systemctl try-restart rsyslog.service || :
 
 %preun pgsql
 if [ "$1" = 0 ]; then
-    %{_initrddir}/rsyslog condrestart > /dev/null 2>/dev/null || :
+    /bin/systemctl try-restart rsyslog.service || :
 fi
 
 %post gssapi
-%{_initrddir}/rsyslog condrestart > /dev/null 2>/dev/null || :
+/bin/systemctl try-restart rsyslog.service || :
 
 %preun gssapi
 if [ "$1" = 0 ]; then
-    %{_initrddir}/rsyslog condrestart > /dev/null 2>/dev/null || :
+    /bin/systemctl try-restart rsyslog.service || :
 fi
 
 %post relp
-%{_initrddir}/rsyslog condrestart > /dev/null 2>/dev/null || :
+/bin/systemctl try-restart rsyslog.service || :
 
 %preun relp
 if [ "$1" = 0 ]; then
-    %{_initrddir}/rsyslog condrestart > /dev/null 2>/dev/null || :
+    /bin/systemctl try-restart rsyslog.service || :
 fi
 
 %post dbi
-%{_initrddir}/rsyslog condrestart > /dev/null 2>/dev/null || :
+/bin/systemctl try-restart rsyslog.service || :
 
 %preun dbi
 if [ "$1" = 0 ]; then
-    %{_initrddir}/rsyslog condrestart > /dev/null 2>/dev/null || :
+    /bin/systemctl try-restart rsyslog.service || :
 fi
 
 %post snmp
-%{_initrddir}/rsyslog condrestart > /dev/null 2>/dev/null || :
+/bin/systemctl try-restart rsyslog.service || :
 
 %preun snmp
 if [ "$1" = 0 ]; then
-    %{_initrddir}/rsyslog condrestart > /dev/null 2>/dev/null || :
+    /bin/systemctl try-restart rsyslog.service || :
 fi
 
 %files
