@@ -1,0 +1,13 @@
+00_common.conf
+01_mysql.conf
+02_pgsql.conf
+03_gssapi.conf
+04_relp.conf
+05_dbi.conf
+06_snmp.conf
+07_rsyslog.log
+rsyslog-5.10.0.tar.gz
+rsyslog.conf
+rsyslog.init
+rsyslog.sysconfig
+sysklogd.conf
