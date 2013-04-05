@@ -1,4 +1,5 @@
 %define _with_systemd 1
+%define _disable_ld_no_undefined 1
 
 %define _libdir /%{_lib}
 
