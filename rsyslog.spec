@@ -28,6 +28,7 @@ BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	java-rpmbuild
 BuildRequires:	krb5-devel
+BuildRequires:	mysql-devel
 BuildRequires:	libdbi-devel
 BuildRequires:	libtool
 BuildRequires:	mysql-devel >= 4.0
