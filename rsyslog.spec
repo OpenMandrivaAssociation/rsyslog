@@ -9,7 +9,7 @@ Version:	5.10.1
 Release:	12
 License:	GPLv3
 Group:		System/Kernel and hardware
-URL:		http://www.rsyslog.com/
+URL:		https://www.rsyslog.com/
 Source0:	http://www.rsyslog.com/files/download/%{name}/%{name}-%{version}.tar.gz
 Source1:	rsyslog.init
 Source2:	rsyslog.sysconfig
