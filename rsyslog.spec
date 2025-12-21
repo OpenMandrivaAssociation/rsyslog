@@ -24,6 +24,8 @@ Source10:	06_snmp.conf
 Source11:	sysklogd.conf
 Source12:	07_rsyslog.log
 Patch0:		rsyslog-5.8.12-systemd.patch
+BuildRequires:	libtool-base
+BuildRequires:	slibtool
 BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	java-rpmbuild
