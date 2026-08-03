@@ -5,8 +5,8 @@
 
 Summary:	Enhanced system logging and kernel message trapping daemons
 Name:		rsyslog
-Version:	5.10.1
-Release:	12
+Version:	8.2606.0
+Release:	1
 License:	GPLv3
 Group:		System/Kernel and hardware
 URL:		https://www.rsyslog.com/
@@ -178,7 +178,7 @@ cp %{SOURCE10} Mandriva/06_snmp.conf
 cp %{SOURCE11} Mandriva/syslog.conf
 cp %{SOURCE12} Mandriva/rsyslog.log
 
-%patch0 -p1 -b .systemd
+%patch -P0 -p1 -b .systemd
 
 %build
 %if %mdkver >= 201200
